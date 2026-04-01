@@ -1,0 +1,20 @@
+# Core HTTP & scraping
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=5.1.0          # faster BS4 parser
+
+# Data processing
+pandas>=2.2.0
+numpy>=1.26.0
+
+# LLM API (OpenAI-compatible client – works with Groq)
+openai>=1.30.0
+
+# Token counting (optional – we use a lightweight fallback by default)
+tiktoken>=0.7.0
+
+# Testing
+pytest>=8.0.0
+
+# Utilities
+python-dotenv>=1.0.0   # load .env file for GROQ_API_KEY
