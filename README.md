@@ -1,6 +1,5 @@
-# Scraper-V1 🔍🤖
+# Scraper-V1: Ecommerce-Sentiment-Scraper
 
-> **AI Engineer Intern – Assignment 2**
 > Scrapes public customer reviews from **Trustpilot**, preprocesses the text, and uses the **Groq LLM API** to generate per-review sentiment analysis and concise summaries. Results are persisted as both **CSV** and **JSON**.
 
 ---
@@ -39,21 +38,21 @@ netflix.com          ← bare domain also works; the scraper auto-expands it
 ## Architecture Overview
 
 ```
-┌───────────────────┐  paginated HTML  ┌──────────────────┐  cleaned text  ┌──────────────────┐
-│   Trustpilot      │ ───────────────► │   scraper.py     │ ─────────────► │ preprocessor.py  │
+┌───────────────────┐  paginated HTML  ┌──────────────────┐  cleaned text   ┌──────────────────┐
+│   Trustpilot      │ ───────────────► │   scraper.py     │ ─────────────►  │ preprocessor.py  │
 │   Company Page    │                  │  requests + BS4  │  chunk if long  │ clean · chunk    │
 │ (server-rendered) │                  │  retry + backoff │                 │ token-count      │
 └───────────────────┘                  └──────────────────┘                 └────────┬─────────┘
-                                                                                      │ per-review chunks
-                                                                                      ▼
+                                                                                     │ per-review chunks
+                                                                                     ▼
                                                                             ┌──────────────────┐
                                                                             │  llm_client.py   │
                                                                             │  Groq API        │
                                                                             │  llama3-8b-8192  │
                                                                             │  rate-limit safe │
                                                                             └────────┬─────────┘
-                                                                                      │ sentiment + summary
-                                                                                      ▼
+                                                                                     │ sentiment + summary
+                                                                                     ▼
                                                                             ┌──────────────────┐
                                                                             │   storage.py     │
                                                                             │  CSV  +  JSON    │
@@ -340,4 +339,4 @@ tests/test_storage.py::TestSaveResults::...                             PASSED
 
 ---
 
-*Built for the AI Engineer Intern assignment. All scraping is performed responsibly on publicly available Trustpilot review pages for educational purposes only.*
+*All scraping is performed responsibly on publicly available Trustpilot review pages for educational purposes only.*
